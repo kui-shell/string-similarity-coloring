@@ -36,8 +36,7 @@ type State = {
  * Update State to assign a color to A[idx]
  *
  */
-function assignColor(A: string[], idx: number, state: State, colorSet: ColorSet): State {
-  const str = A[idx]
+function assignColor(str: string, originalIdx: number, state: State, colorSet: ColorSet): State {
   const { bestMatch } = state.primaries.length === 0 ? { bestMatch: undefined } : ss.findBestMatch(str, state.primaries)
 
   if (!bestMatch || bestMatch.rating === 0) {
@@ -47,21 +46,21 @@ function assignColor(A: string[], idx: number, state: State, colorSet: ColorSet)
       const primaryColor = colorSet[state.primaries.length]
       state.primaries.push(str)
       state.tmp[str] = primaryColor
-      state.assignment[idx] = primaryColor
+      state.assignment[originalIdx] = primaryColor
       debug('assigning new primary', str, primaryColor)
     } else {
       // no more primary colors left in the given ColorSet
       // pick a random one
       const randomColorSetIdx = ~~(Math.random() * colorSet.length)
       const color = colorSet[randomColorSetIdx]
-      state.assignment[idx] = color
+      state.assignment[originalIdx] = color
       debug('assigning random primary', str, color)
     }
   } else {
     // we found a good match!
     const primaryColor = state.tmp[bestMatch.target]
     const color = darkenBy(primaryColor, bestMatch.rating)
-    state.assignment[idx] = color
+    state.assignment[originalIdx] = color
     debug('variant of primary', str, primaryColor, color)
   }
 
@@ -84,9 +83,9 @@ export default function colorize(A: string[], options: Options): string[] {
     : defaults[4]
 
   return A
-    .slice(0)
-    .sort((a, b) => a.length - b.length)
-    .reduce((state, _, idx, A) => assignColor(A, idx, state, colorSet),
+    .map((str, originalIdx) => ({ str, originalIdx }))
+    .sort((a, b) => a.str.length - b.str.length)
+    .reduce((state, _, idx, A) => assignColor(A[idx].str, A[idx].originalIdx, state, colorSet),
             { primaries: [] as string[], assignment: [] as Color[], tmp: {} })
     .assignment
     .map(_ => `#${convert.hsl.hex([_.hue, _.saturation, _.lightness])}`)

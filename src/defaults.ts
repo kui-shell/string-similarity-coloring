@@ -22,22 +22,36 @@ function hsl(hex: string): Color {
   return { hue: hsl[0], saturation: hsl[1], lightness: hsl[2] }
 }
 
-const three = ['#a6cee3', '#1f78b4', '#b2df8a']
-const four = three.concat(['#33a02c'])
-const five = four.concat(['#fb9a99'])
-const six = five.concat(['#e31a1c'])
-const seven = six.concat(['#fdbf6f'])
-const eight = seven.concat(['#ff7f00'])
-const nine = eight.concat(['#cab2d6'])
-const ten = nine.concat(['#6a3d9a'])
-const eleven = ten.concat(['#ffff99'])
-const twelve = eleven.concat(['#b15928'])
+const A = '#1f78b4'
+const B = '#33a02c'
+const C = '#e31a1c'
+const D = '#ff7f00'
+const E = '#6a3d9a'
+const F = '#b15928'
+const AA = '#a6cee3'
+const BB = '#b2df8a'
+const CC = '#fb9a99'
+const DD = '#fdbf6f'
+const EE = '#cab2d6'
+const FF = '#ffff99'
+const one = [A]
+const two = [A, B]
+const three = [A, B, C]
+const four = [A, B, C, D]
+const five = [A, B, C, D, E]
+const six = [A, B, C, D, E, F]
+const seven = six.concat([AA])
+const eight = seven.concat([BB])
+const nine = eight.concat([CC])
+const ten = nine.concat([DD])
+const eleven = ten.concat([EE])
+const twelve = eleven.concat([FF])
 
 /** Indexed by number of colors */
 const defaultColorSets: ColorSet[] = [ 
-  undefined as unknown as ColorSet,
-  undefined as unknown as ColorSet,
-  undefined as unknown as ColorSet,
+  one.map(hsl),
+  two.map(hsl),
+  three.map(hsl),
   three.map(hsl),
   four.map(hsl),
   five.map(hsl),

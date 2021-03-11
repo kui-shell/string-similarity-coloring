@@ -4,6 +4,11 @@
   "description": "Color a given set of N strings into a set of M<N color classes",
   "main": "dist/index.js",
   "module": "mdist/index.js",
+  "files": [
+    "README.md",
+    "dist",
+    "mdist"
+  ],
   "scripts": {
     "watch": "tsc --build tsconfig.json --watch",
     "compile": "tsc --build tsconfig.json && tsc --build tsconfig-es6.json",
