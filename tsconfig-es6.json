@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES2016",
+    "moduleResolution": "node",
+    "outDir": "./mdist"
+  }
+}

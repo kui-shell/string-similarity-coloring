@@ -1,0 +1,27 @@
+{
+  "name": "string-similarity-coloring",
+  "version": "1.0.0",
+  "description": "Color a given set of N strings into a set of M<N color classes",
+  "main": "dist/index.js",
+  "module": "mdist/index.js",
+  "scripts": {
+    "watch": "tsc --build tsconfig.json --watch",
+    "compile": "tsc --build tsconfig.json && tsc --build tsconfig-es6.json",
+    "prepare": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["string", "coloring", "colors", "similarity"],
+  "author": "@starpit",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "string-similarity": "^4.0.4"
+  },
+  "devDependencies": {
+    "@types/color-convert": "^2.0.0",
+    "@types/debug": "^4.1.5",
+    "@types/string-similarity": "^4.0.0",
+    "debug": "^4.3.1",
+    "typescript": "^4.2.3"
+  }
+}
