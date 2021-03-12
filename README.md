@@ -1,23 +1,37 @@
 # String Similarity Coloring
 
+This package includes a set of heuristics to map a set of N strings to
+a set of M<N colors.
+
+## Getting Started
+
 ```
 npm install string-similarity-coloring
+```
 
-DEBUG=* node
+```typescript
+import ssc from 'string-similarity-coloring'
 
-require('string-similarity-coloring').default(['apache-coyote', 'apache', 'nginx 1', 'nginx 2', 'nginx', 'microsoft a'])
-  string-colors assigning new primary nginx { hue: 201, saturation: 52, lightness: 77 } +0ms
-  string-colors assigning new primary apache { hue: 204, saturation: 71, lightness: 41 } +2ms
-  string-colors variant of primary nginx 1 { hue: 201, saturation: 52, lightness: 77 } { hue: 201, saturation: 52, lightness: 68.44444444444444 } +0ms
-  string-colors variant of primary nginx 2 { hue: 201, saturation: 52, lightness: 77 } { hue: 201, saturation: 52, lightness: 68.44444444444444 } +0ms
-  string-colors assigning new primary microsoft a { hue: 92, saturation: 57, lightness: 71 } +0ms
-  string-colors variant of primary apache-coyote { hue: 204, saturation: 71, lightness: 41 } { hue: 204, saturation: 71, lightness: 24.11764705882353 } +1ms
+// returns an array of color-class assignments,
+// parallel to the input array of strings
+ssc(['apache-coyote', 'apache', 'nginx 1', 'nginx 2', 'nginx', 'microsoft a'])
 [
-  { hue: 201, saturation: 52, lightness: 77 },
-  { hue: 204, saturation: 71, lightness: 41 },
-  { hue: 201, saturation: 52, lightness: 68.44444444444444 },
-  { hue: 201, saturation: 52, lightness: 68.44444444444444 },
-  { hue: 92, saturation: 57, lightness: 71 },
-  { hue: 204, saturation: 71, lightness: 24.11764705882353 }
+  { primary: 0, secondary: 0, color: '#2166AB' },
+  { primary: 0, secondary: 2, color: '#91C4DE' },
+  { primary: 1, secondary: 0, color: '#B4182B' },
+  { primary: 1, secondary: 3, color: '#FDDCC9' },
+  { primary: 1, secondary: 3, color: '#FDDCC9' },
+  { primary: 2, secondary: 0, color: '#762A83' }
 ]
 ```
+
+Where `primary` is the primary classification of the string, and
+`secondary` is a secondary classification, based on distance of this
+string from the string that defines the primary. If you want to use
+your own color assignments, you can use the `primary` and
+`secondary`. Otherwise, you can use the color scheme provided by this
+package.
+
+This screenshot illustrates a similar example:
+
+<img align="right" width="400" src="docs/string-similarity-coloring.png">
