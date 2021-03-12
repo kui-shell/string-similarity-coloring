@@ -33,7 +33,8 @@ type State = {
   // indexed by input array A
   assignment: Assignment[]
 
-  tmp: Record<string, number> // map from primary to idx into assignment array
+  // map from primary to idx into assignment array
+  tmp: Record<string, number>
 }
 
 /**
@@ -106,7 +107,6 @@ export default function colorize(A: string[], options?: Options): Assignment<str
 
   return A
     .map((str, originalIdx) => ({ str, originalIdx }))
-    // .sort((a, b) => a.str.length - b.str.length)
     .reduce((state, _, idx, A) => assignColor(A[idx].str, A[idx].originalIdx, state, colorSet),
             { primaries: [] as string[], assignment: [] as Assignment[], tmp: {} })
     .assignment
