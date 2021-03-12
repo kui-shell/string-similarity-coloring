@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import defaults from './defaults'
-
 type HSL = { hue: number, saturation: number, lightness: number }
 function isHSL(o: any): o is HSL {
   const hsl = o as HSL
@@ -26,21 +24,12 @@ function isHSL(o: any): o is HSL {
 }
 
 export type Color = HSL
-export type ColorSet = Color[]
+export type ColorSet = Color[][]
 
 function isColor(o: any): o is Color {
   return isHSL(o)
 }
 
 export function isColorSet(o: any): o is ColorSet {
-  return Array.isArray(o as ColorSet) && o.length > 0 && isColor(o[0])
-}
-
-export function colorSetOfN(N: number): ColorSet {
-  const set = defaults[N]
-  if (!set) {
-    throw new Error(`No supported color set for ${N} colors`)
-  } else {
-    return set
-  }
+  return Array.isArray(o as ColorSet) && o.length > 0 && Array.isArray(o[0]) && isColor(o[0][0])
 }

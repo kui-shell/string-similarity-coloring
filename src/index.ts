@@ -19,17 +19,21 @@ import ss from 'string-similarity'
 import convert from 'color-convert'
 
 import defaults from './defaults'
-import { darkenBy } from './util'
-import Options, { hasColorSet, hasNColors } from './options'
-import { Color, ColorSet, isColorSet, colorSetOfN } from './ColorSet'
+import { Color, ColorSet } from './ColorSet'
+import Options, { hasColorSet } from './options'
 
-const debug = Debug('string-colors')
+const debug = Debug('string-similarity-coloring')
+
+type Assignment<C = Color> = { primary: number, secondary: number, color: C }
 
 type State = {
-  primaries: string[] // not indexed by input array A
-  assignment: Color[] // indexed by input array A
+  // not indexed by input array A
+  primaries: string[]
 
-  tmp: Record<string, Color> // map from primary to color assignment for that primary
+  // indexed by input array A
+  assignment: Assignment[]
+
+  tmp: Record<string, number> // map from primary to idx into assignment array
 }
 
 /**
@@ -37,30 +41,50 @@ type State = {
  *
  */
 function assignColor(str: string, originalIdx: number, state: State, colorSet: ColorSet): State {
-  const { bestMatch } = state.primaries.length === 0 ? { bestMatch: undefined } : ss.findBestMatch(str, state.primaries)
+  const match = state.primaries.length === 0 ? { bestMatch: undefined } : ss.findBestMatch(str, state.primaries)
+  const { bestMatch } = match
 
   if (!bestMatch || bestMatch.rating === 0) {
     // no good matches
     if (state.primaries.length < colorSet.length) {
       // reserve a primary color from the ColorSet
-      const primaryColor = colorSet[state.primaries.length]
+      const primaryColor = colorSet[state.primaries.length][0]
+      state.tmp[str] = originalIdx
+      state.assignment[originalIdx] = {
+        primary: state.primaries.length,
+        secondary: 0,
+        color: primaryColor
+      }
       state.primaries.push(str)
-      state.tmp[str] = primaryColor
-      state.assignment[originalIdx] = primaryColor
       debug('assigning new primary', str, primaryColor)
     } else {
       // no more primary colors left in the given ColorSet
       // pick a random one
       const randomColorSetIdx = ~~(Math.random() * colorSet.length)
-      const color = colorSet[randomColorSetIdx]
-      state.assignment[originalIdx] = color
-      debug('assigning random primary', str, color)
+      const color = colorSet[randomColorSetIdx][0]
+      state.tmp[str] = originalIdx
+      state.assignment[originalIdx] = {
+        primary: randomColorSetIdx,
+        secondary: 0,
+        color
+      }
+      debug('assigning random primary', str, color, match)
     }
   } else {
     // we found a good match!
-    const primaryColor = state.tmp[bestMatch.target]
-    const color = darkenBy(primaryColor, bestMatch.rating)
-    state.assignment[originalIdx] = color
+    const primaryOriginalIdx = state.tmp[bestMatch.target]
+    const { primary, color: primaryColor } = state.assignment[primaryOriginalIdx]
+
+    const secondary = ~~(bestMatch.rating * colorSet[0].length)
+
+    const color = colorSet[primary][secondary]
+
+    state.assignment[originalIdx] = {
+      primary,
+      secondary,
+      color
+    }
+      
     debug('variant of primary', str, primaryColor, color)
   }
 
@@ -71,22 +95,24 @@ function assignColor(str: string, originalIdx: number, state: State, colorSet: C
 /**
  * Takes a list of N strings, and returns a parallel list of N
  * colors. The number of distinct colors in the return value will be
- * M, where M is given by options.colorSet, options.nColors, or the
- * default color set, which has 4 colors.
+ * M, where M is given by options.colorSet or the default color set,
+ * which has 6 primary colors, and 4 secondary colors.
  *
  * @return array of hex strings
  *
  */
-export default function colorize(A: string[], options: Options): string[] {
-  const colorSet = hasColorSet(options) ? options.colorSet
-    : hasNColors(options) ? colorSetOfN(options.nColors)
-    : defaults[4]
+export default function colorize(A: string[], options?: Options): Assignment<string>[] {
+  const colorSet = hasColorSet(options) ? options.colorSet : defaults
 
   return A
     .map((str, originalIdx) => ({ str, originalIdx }))
-    .sort((a, b) => a.str.length - b.str.length)
+    // .sort((a, b) => a.str.length - b.str.length)
     .reduce((state, _, idx, A) => assignColor(A[idx].str, A[idx].originalIdx, state, colorSet),
-            { primaries: [] as string[], assignment: [] as Color[], tmp: {} })
+            { primaries: [] as string[], assignment: [] as Assignment[], tmp: {} })
     .assignment
-    .map(_ => `#${convert.hsl.hex([_.hue, _.saturation, _.lightness])}`)
+    .map(_ => ({
+      primary: _.primary,
+      secondary: _.secondary,
+      color: `#${convert.hsl.hex([_.color.hue, _.color.saturation, _.color.lightness])}`
+    }))
 }

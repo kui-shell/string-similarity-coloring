@@ -19,18 +19,11 @@ import { ColorSet, isColorSet } from './ColorSet'
 type SpecifiedColorSet = {
   colorSet: ColorSet
 }
-type SpecifiedNColors = {
-  nColors: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-}
 
-type Options = SpecifiedColorSet | SpecifiedNColors
+type Options = SpecifiedColorSet
 
-export function hasColorSet(options: Options): options is SpecifiedColorSet {
-  return options && isColorSet((options as SpecifiedColorSet).colorSet)
-}
-
-export function hasNColors(options: Options): options is SpecifiedNColors {
-  return options && typeof (options as SpecifiedNColors).nColors === 'number'
+export function hasColorSet(options?: Options): options is SpecifiedColorSet {
+  return options ? isColorSet((options as SpecifiedColorSet).colorSet) : false
 }
 
 export default Options

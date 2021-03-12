@@ -22,47 +22,57 @@ function hsl(hex: string): Color {
   return { hue: hsl[0], saturation: hsl[1], lightness: hsl[2] }
 }
 
-const A = '#1f78b4'
-const B = '#33a02c'
-const C = '#e31a1c'
-const D = '#ff7f00'
-const E = '#6a3d9a'
-const F = '#b15928'
-const AA = '#a6cee3'
-const BB = '#b2df8a'
-const CC = '#fb9a99'
-const DD = '#fdbf6f'
-const EE = '#cab2d6'
-const FF = '#ffff99'
-const one = [A]
-const two = [A, B]
-const three = [A, B, C]
-const four = [A, B, C, D]
-const five = [A, B, C, D, E]
-const six = [A, B, C, D, E, F]
-const seven = six.concat([AA])
-const eight = seven.concat([BB])
-const nine = eight.concat([CC])
-const ten = nine.concat([DD])
-const eleven = ten.concat([EE])
-const twelve = eleven.concat([FF])
-
-/** Indexed by number of colors */
-const defaultColorSets: ColorSet[] = [ 
-  one.map(hsl),
-  two.map(hsl),
-  three.map(hsl),
-  three.map(hsl),
-  four.map(hsl),
-  five.map(hsl),
-  six.map(hsl),
-  seven.map(hsl),
-  eight.map(hsl),
-  nine.map(hsl),
-  ten.map(hsl),
-  eleven.map(hsl),
-  twelve.map(hsl)
+const A = [
+  '#2166ac',
+  '#4393c3',
+  '#92c5de',
+  '#d1e5f0'
 ]
 
-export default defaultColorSets
+const B = [
+  '#b2182b',
+  '#d6604d',
+  '#f4a582',
+  '#fddbc7'
+]
+
+const C = [
+  '#762a83',
+  '#9970ab',
+  '#c2a5cf',
+  '#e7d4e8'
+]
+
+const D = [
+  '#1b7837',
+  '#5aae61',
+  '#a6dba0',
+  '#d9f0d3'
+]
+
+const E = [
+  '#4d4d4d',
+  '#878787',
+  '#bababa',
+  '#e0e0e0'
+]
+
+const F = [
+  '#01665e',
+  '#35978f',
+  '#80cdc1',
+  '#c7eae5'
+]
+
+/** Indexed by number of colors */
+const defaultColorSet: ColorSet = [ 
+  A.map(hsl),
+  B.map(hsl),
+  C.map(hsl),
+  D.map(hsl),
+  E.map(hsl),
+  F.map(hsl)
+]
+
+export default defaultColorSet
 
