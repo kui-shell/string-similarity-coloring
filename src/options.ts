@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
+import Theme from './themes'
 import { ColorSet, isColorSet } from './ColorSet'
 
 type SpecifiedColorSet = {
   colorSet: ColorSet
 }
 
-type Options = SpecifiedColorSet
+type SpecifiedTheme = {
+  theme: Theme
+}
+
+type Options = Partial<SpecifiedColorSet> & Partial<SpecifiedTheme>
 
 export function hasColorSet(options?: Options): options is SpecifiedColorSet {
   return options ? isColorSet((options as SpecifiedColorSet).colorSet) : false

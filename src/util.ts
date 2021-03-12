@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
+import convert from 'color-convert'
 import { Color } from './ColorSet'
 
-export function darkenBy(color: Color, fraction: number): Color {
-  return {
-    hue: color.hue,
-    saturation: color.saturation,
-    lightness: color.lightness * fraction
-  }
+export function hsl(hex: string): Color {
+  const hsl = convert.hex.hsl(hex)
+  return { hue: hsl[0], saturation: hsl[1], lightness: hsl[2] }
 }

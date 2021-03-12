@@ -33,3 +33,5 @@ function isColor(o: any): o is Color {
 export function isColorSet(o: any): o is ColorSet {
   return Array.isArray(o as ColorSet) && o.length > 0 && Array.isArray(o[0]) && isColor(o[0][0])
 }
+
+export default ColorSet

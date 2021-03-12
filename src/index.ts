@@ -18,9 +18,9 @@ import Debug from 'debug'
 import ss from 'string-similarity'
 import convert from 'color-convert'
 
-import defaults from './defaults'
 import { Color, ColorSet } from './ColorSet'
 import Options, { hasColorSet } from './options'
+import defaults, { defaultFor } from './defaults'
 
 const debug = Debug('string-similarity-coloring')
 
@@ -103,7 +103,7 @@ function assignColor(str: string, originalIdx: number, state: State, colorSet: C
  *
  */
 export default function colorize(A: string[], options?: Options): Assignment<string>[] {
-  const colorSet = hasColorSet(options) ? options.colorSet : defaults
+  const colorSet = hasColorSet(options) ? options.colorSet : options && options.theme ? defaultFor(options.theme) : defaults
 
   return A
     .map((str, originalIdx) => ({ str, originalIdx }))

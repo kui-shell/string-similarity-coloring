@@ -1,7 +1,11 @@
 # String Similarity Coloring
 
 This package includes a set of heuristics to map a set of N strings to
-a set of M<N colors.
+a set of M<N colors. There are two supported themes, which you can specify via the `theme` option to the main exported function:
+
+````typescript
+{ theme: 'colorbrewer' | 'patternfly' }
+```
 
 ## Getting Started
 
@@ -14,7 +18,8 @@ import ssc from 'string-similarity-coloring'
 
 // returns an array of color-class assignments,
 // parallel to the input array of strings
-ssc(['apache-coyote', 'apache', 'nginx 1', 'nginx 2', 'nginx', 'microsoft a'])
+ssc(['apache-coyote', 'apache', 'nginx 1', 'nginx 2', 'nginx', 'microsoft a'],
+    { theme: 'colorbrewer' })
 [
   { primary: 0, secondary: 0, color: '#2166AB' },
   { primary: 0, secondary: 2, color: '#91C4DE' },

@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-import Theme from './themes'
-import colorbrewer from './themes/colorbrewer'
-import patternfly4 from './themes/patternfly4'
-
-export function defaultFor(theme: Theme) {
-  return theme === 'colorbrewer' ? colorbrewer : patternfly4
-}
-
-export default patternfly4
+type Theme = 'patternfly4' | 'colorbrewer'
+export default Theme
