@@ -85,14 +85,14 @@ const orange = [
 
 /** Indexed by number of colors */
 const colorSet: ColorSet = [ 
-  blue.map(hsl),
-  green.map(hsl),
-  gray.map(hsl),
   orange.map(hsl),
+  blue.map(hsl),
+  red.map(hsl),
+  gold.map(hsl),
   cyan.map(hsl),
   purple.map(hsl),
-  red.map(hsl),
-  gold.map(hsl)
+  gray.map(hsl),
+  green.map(hsl)
 ]
 
 export default colorSet
