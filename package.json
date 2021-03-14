@@ -24,7 +24,7 @@
   },  
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IBM/kui.git"
+    "url": "git+https://github.com/kui-shell/string-similarity-coloring"
   },
   "dependencies": {
     "color-convert": "^2.0.1",
