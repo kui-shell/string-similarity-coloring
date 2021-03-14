@@ -1,6 +1,6 @@
 {
   "name": "string-similarity-coloring",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Color a given set of N strings into a set of M<N color classes",
   "main": "dist/index.js",
   "module": "mdist/index.js",
