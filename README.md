@@ -3,7 +3,7 @@
 This package includes a set of heuristics to map a set of N strings to
 a set of M<N colors. There are two supported themes, which you can specify via the `theme` option to the main exported function:
 
-````typescript
+```typescript
 { theme: 'colorbrewer' | 'patternfly' }
 ```
 
