@@ -15,9 +15,17 @@
     "prepare": "npm run compile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["string", "coloring", "colors", "similarity"],
+  "keywords": ["string", "coloring", "colors", "similarity", "clustering"],
   "author": "@starpit",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/kui-shell/string-similarity-coloring",
+  "bugs": {
+    "url": "https://github.com/kui-shell/string-similarity-coloring/issues"
+  },  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IBM/kui.git"
+  },
   "dependencies": {
     "color-convert": "^2.0.1",
     "string-similarity": "^4.0.4"
