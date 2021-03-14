@@ -15,7 +15,7 @@ To choose between the two themes, specify via the `theme` option to
 the main exported function. For example, in the following example, we
 chose to use the `colorbrewer` theme.
 
-<img align="right" width="252" src="https://github.com/kui-shell/string-similarity-coloring/raw/main/docs/string-similarity-coloring.png">
+<img align="right" width="240" src="https://github.com/kui-shell/string-similarity-coloring/raw/main/docs/string-similarity-coloring.png">
 
 ```typescript
 import ssc from 'string-similarity-coloring'
