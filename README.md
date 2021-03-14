@@ -42,4 +42,4 @@ response.
 
 This screenshot illustrates a similar example:
 
-<img align="right" width="400" src="docs/string-similarity-coloring.png">
+<img align="right" width="400" src="https://github.com/kui-shell/string-similarity-coloring/raw/main/docs/string-similarity-coloring.png">
